@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: feed-api-deployment
+  name: user-api-deployment
   labels:
-    app: feed-api-deployment
+    app: user-api-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: feed-api-pod
+      app: user-api-pod
   template:
     metadata:
       labels:
-        app: feed-api-pod
+        app: user-api-pod
     spec:
       containers:
-      - name: feed-api
-        image: wolfgangbecker/udacity-c4-feed-api
+      - name: user-api
+        image: wolfgangbecker/udacity-c4-user-api
         imagePullPolicy: Always
         env:
         - name: URL
