@@ -8,11 +8,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: feed-api-pod
+      app: feed-api
   template:
     metadata:
       labels:
-        app: feed-api-pod
+        app: feed-api
     spec:
       containers:
       - name: feed-api
