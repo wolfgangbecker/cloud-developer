@@ -8,11 +8,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: user-api-pod
+      app: user-api
   template:
     metadata:
       labels:
-        app: user-api-pod
+        app: user-api
     spec:
       containers:
       - name: user-api
