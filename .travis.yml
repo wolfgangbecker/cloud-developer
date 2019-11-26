@@ -3,7 +3,9 @@ language: minimal
 services: docker
 
 env:
-  - DOCKER_COMPOSE_VERSION=1.23.2
+  global:
+    - SHA=$(git rev-parse HEAD)
+    - DOCKER_COMPOSE_VERSION=1.23.2
 
 before_install:
   - sudo rm /usr/local/bin/docker-compose
@@ -15,4 +17,15 @@ before_install:
   - sudo mv kubectl /usr/local/bin/
 
 install:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker-compose -f course-03/exercises/docker-compose-build.yml build --parallel
+  - docker push wolfgangbecker/udacity-c4-proxy:$SHA
+  - docker push wolfgangbecker/udacity-c4-frontend:$SHA
+  - docker push wolfgangbecker/udacity-c4-user-api:$SHA
+  - docker push wolfgangbecker/udacity-c4-feed-api:$SHA
+
+deploy:
+  - provider: script
+    script: scripts/deploy.sh
+    on:
+      branch: master
