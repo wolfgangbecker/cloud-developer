@@ -18,7 +18,14 @@ before_install:
 
 install:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker-compose -f course-03/exercises/docker-compose-build.yml build --parallel
+  - docker build -t wolfgangbecker/udacity-c4-proxy:latest -t wolfgangbecker/udacity-c4-proxy:$SHA -f ./course-03/exercises/proxy/Dockerfile ./course-03/exercises/proxy
+  - docker build -t wolfgangbecker/udacity-c4-frontend:latest -t wolfgangbecker/udacity-c4-frontend:$SHA -f ./course-03/exercises/udacity-c2-frontend/Dockerfile ./course-03/exercises/udacity-c2-frontend
+  - docker build -t wolfgangbecker/udacity-c4-user-api:latest -t wolfgangbecker/udacity-c4-user-api:$SHA -f ./course-03/exercises/udacity-c2-restapi-user/Dockerfile ./course-03/exercises/udacity-c2-restapi-user
+  - docker build -t wolfgangbecker/udacity-c4-feed-api:latest -t wolfgangbecker/udacity-c4-feed-api:$SHA -f ./course-03/exercises/udacity-c2-restapi-feed/Dockerfile ./course-03/exercises/udacity-c2-restapi-feed
+  - docker push wolfgangbecker/udacity-c4-proxy:latest
+  - docker push wolfgangbecker/udacity-c4-frontend:latest
+  - docker push wolfgangbecker/udacity-c4-user-api:latest
+  - docker push wolfgangbecker/udacity-c4-feed-api:latest
   - docker push wolfgangbecker/udacity-c4-proxy:$SHA
   - docker push wolfgangbecker/udacity-c4-frontend:$SHA
   - docker push wolfgangbecker/udacity-c4-user-api:$SHA
